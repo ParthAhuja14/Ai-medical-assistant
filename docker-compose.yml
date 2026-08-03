@@ -1,0 +1,28 @@
+services:
+  backend:
+    build: ./backend
+    container_name: medical-assistant-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - SECRET_KEY=${SECRET_KEY:-change_me_in_production}
+      - DATABASE_URL=sqlite:////app/data_persisted/medical_assistant.db
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-2.5-flash}
+      - GOOGLE_PLACES_API_KEY=${GOOGLE_PLACES_API_KEY:-}
+      - CORS_ORIGINS=["http://localhost:5173","http://localhost"]
+    volumes:
+      - backend_data:/app/data_persisted
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: medical-assistant-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  backend_data:

@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-canvas text-ink font-body antialiased;
+}
+
+::selection {
+  background: #0E7C7B33;
+}
+
+/* Visible keyboard focus ring, kept consistent across interactive elements */
+:focus-visible {
+  outline: 2px solid #0E7C7B;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Signature pulse-line divider, used sparingly as a section accent */
+.pulse-divider {
+  height: 24px;
+  width: 100%;
+  overflow: hidden;
+}
+.pulse-divider svg {
+  width: 100%;
+  height: 100%;
+}
+.pulse-line-path {
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  animation: draw-pulse 1.8s ease-out forwards;
+}
+@keyframes draw-pulse {
+  to { stroke-dashoffset: 0; }
+}
